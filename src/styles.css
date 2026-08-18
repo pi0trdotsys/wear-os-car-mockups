@@ -132,6 +132,95 @@
   --sidebar-ring: oklch(0.551 0.027 264.364);
 }
 
+/* ---------------------------------------------------------------
+ * Watch-face design tokens (future tech minimalism).
+ * Scoped to .wf-root so the surrounding preview chrome stays neutral.
+ * --------------------------------------------------------------- */
+:root {
+  --wf-bg: oklch(0.145 0.012 264);
+  --wf-bg-deep: oklch(0.105 0.01 264);
+  --wf-ink: oklch(0.97 0.004 264);
+  --wf-ink-muted: oklch(0.66 0.012 264);
+  --wf-accent: oklch(0.7 0.19 43);
+  --wf-accent-soft: oklch(0.62 0.16 43);
+  --wf-hairline: oklch(1 0 0 / 8%);
+  --wf-hairline-strong: oklch(1 0 0 / 16%);
+  --font-wf-display: "Saira Condensed", "Arial Narrow", sans-serif;
+  --font-wf-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --studio-bg: oklch(0.22 0.008 264);
+}
+
+@theme inline {
+  --color-wf-bg: var(--wf-bg);
+  --color-wf-ink: var(--wf-ink);
+  --color-wf-ink-muted: var(--wf-ink-muted);
+  --color-wf-accent: var(--wf-accent);
+  --color-studio-bg: var(--studio-bg);
+  --font-display: var(--font-wf-display);
+  --font-mono-wf: var(--font-wf-mono);
+}
+
+@utility wf-root {
+  position: relative;
+  border-radius: 9999px;
+  color: var(--wf-ink);
+  isolation: isolate;
+}
+
+@utility wf-dial {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      130% 90% at 50% 6%,
+      color-mix(in oklab, var(--wf-accent) 12%, transparent) 0%,
+      transparent 46%
+    ),
+    radial-gradient(90% 70% at 50% 108%, oklch(0.24 0.02 264) 0%, transparent 60%),
+    var(--wf-bg);
+}
+
+@utility wf-ambient {
+  & .wf-dial {
+    background: oklch(0 0 0);
+  }
+}
+
+@utility wf-glow {
+  position: absolute;
+  left: 50%;
+  top: 128px;
+  width: 340px;
+  height: 200px;
+  transform: translateX(-50%);
+  border-radius: 9999px;
+  background: radial-gradient(
+    closest-side,
+    color-mix(in oklab, var(--wf-accent) 26%, transparent),
+    transparent 72%
+  );
+  filter: blur(26px);
+  pointer-events: none;
+}
+
+@utility wf-car {
+  color: var(--wf-accent);
+  animation: wf-car-in 520ms cubic-bezier(0.22, 0.7, 0.2, 1) both;
+}
+
+@keyframes wf-car-in {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 @layer base {
   * {
     border-color: var(--color-border);
@@ -142,3 +231,4 @@
     color: var(--color-foreground);
   }
 }
+

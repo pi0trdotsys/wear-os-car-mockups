@@ -83,8 +83,8 @@ export const CARS: CarSpec[] = [
   },
 ];
 
-export const DEFAULT_CAR_ID = CARS[0].id;
+export const DEFAULT_CAR_ID = "hyper-mid";
 
 export function getCar(id: string): CarSpec {
-  return CARS.find((c) => c.id === id) ?? CARS[0];
+  return CARS.find((c) => c.id === id) ?? (CARS[0] as CarSpec);
 }
